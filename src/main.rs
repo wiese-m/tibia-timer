@@ -5,10 +5,25 @@ use std::time::Duration;
 
 use rodio::{Decoder, OutputStream, Source};
 
-fn main() {
+slint::include_modules!();
+
+fn main() -> Result<(), slint::PlatformError> {
+    let ui = AppWindow::new()?;
+    let countdown = ui.get_countdown();
+
+    ui.on_start_timer(move || {
+        std::thread::spawn(move || {
+            start_countdown(countdown);
+        });
+    });
+
+    ui.run()
+}
+
+fn start_countdown(mut countdown: i32) {
     let (_stream, stream_handle) = OutputStream::try_default().unwrap();
 
-    let mut countdown = 15;
+    // let mut countdown = 15;
     let warning_threshold = 10;
     let critical_threshold = 5;
     
