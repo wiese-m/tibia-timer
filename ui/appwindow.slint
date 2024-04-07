@@ -1,16 +1,33 @@
-import { Button, VerticalBox } from "std-widgets.slint";
+import { Button, GridBox, LineEdit } from "std-widgets.slint";
 
 export component AppWindow inherits Window {
-    in-out property<int> countdown: 15;
-    callback start-timer();
-    VerticalBox {
-        Text {
-            text: "Countdown: \{root.countdown}";
+    callback start-timer(string, string, string);
+    GridBox {
+        Row {
+            Text { text: "Critical alarm after:"; }
+            critical_threshold := LineEdit {
+                input-type: number;
+                placeholder-text: "[seconds]";
+            }
         }
-        Button {
-            text: "Start Timer";
-            clicked => {
-                root.start-timer();
+        Row {
+            Text { text: "Warning alarm after:"; }
+            warning_threshold := LineEdit {
+                input-type: number;
+                placeholder-text: "[seconds]";
+            }
+        }
+        Row {
+            Text { text: "Total time:"; }
+            total_time := LineEdit {
+                input-type: number;
+                placeholder-text: "[seconds]";
+            }
+        }
+        Row {
+            Button {
+                text: "Start Timer";
+                clicked => { root.start-timer(total_time.text, warning-threshold.text, critical-threshold.text); }
             }
         }
     }
