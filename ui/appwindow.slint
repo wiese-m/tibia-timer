@@ -1,25 +1,28 @@
 import { Button, GridBox, LineEdit } from "std-widgets.slint";
 
 export component AppWindow inherits Window {
+    always-on-top: true;
+    title: "Tibia Timer";
+    in-out property <int> curr-timer-value;
     callback start-timer(string, string, string);
     GridBox {
         Row {
             Text { text: "Critical alarm after:"; }
-            critical_threshold := LineEdit {
+            critical-threshold := LineEdit {
                 input-type: number;
                 placeholder-text: "[seconds]";
             }
         }
         Row {
             Text { text: "Warning alarm after:"; }
-            warning_threshold := LineEdit {
+            warning-threshold := LineEdit {
                 input-type: number;
                 placeholder-text: "[seconds]";
             }
         }
         Row {
             Text { text: "Total time:"; }
-            total_time := LineEdit {
+            total-time := LineEdit {
                 input-type: number;
                 placeholder-text: "[seconds]";
             }
@@ -27,7 +30,17 @@ export component AppWindow inherits Window {
         Row {
             Button {
                 text: "Start Timer";
-                clicked => { root.start-timer(total_time.text, warning-threshold.text, critical-threshold.text); }
+                clicked => {
+                    root.start-timer(total_time.text, warning-threshold.text, critical-threshold.text);
+                    self.text = "Timer running...";
+                }
+            }
+            Text { text: "\{root.curr-timer-value}"; }
+        }
+        Row {
+            Text {
+                font-size: 10px;
+                text: "Copyright (c) 2024 Maras";
             }
         }
     }
