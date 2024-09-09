@@ -13,3 +13,7 @@ cd tibia-timer/
 ```bash
 cargo run
 ```
+
+Preview:
+
+![image](https://github.com/user-attachments/assets/08c9c049-8f6b-48f4-ad5d-bbc61a675dc3)
