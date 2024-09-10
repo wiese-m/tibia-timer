@@ -2,7 +2,9 @@
 
 A simple timer application written in Rust with a Slint UI, designed specifically for the game [Tibia](https://www.tibia.com/news/?subtopic=latestnews) (also known as Fear Timer) to track boss special actions. The timer plays warning and critical sounds repeatedly based on user-defined thresholds.
 
-## Installation
+Go to [releases page](https://github.com/wiese-m/tibia-timer/releases/tag/v1.0.0) and download executable for your OS.
+
+## How to Build
 
 ```bash
 sudo apt update && sudo apt install libsdl2-dev
@@ -14,7 +16,7 @@ git clone https://github.com/wiese-m/tibia-timer.git
 cd tibia-timer/
 ```
 ```bash
-cargo run
+cargo build
 ```
 
 Preview:
