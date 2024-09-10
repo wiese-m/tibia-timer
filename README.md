@@ -5,6 +5,9 @@ A simple timer application written in Rust with a Slint UI, designed specificall
 ## Installation
 
 ```bash
+sudo apt update && sudo apt install libsdl2-dev
+```
+```bash
 git clone https://github.com/wiese-m/tibia-timer.git
 ```
 ```bash
