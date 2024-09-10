@@ -1,5 +1,4 @@
-use std::fs::File;
-use std::io::BufReader;
+use std::io::Cursor;
 use std::thread::sleep;
 use std::time::Duration;
 
@@ -7,6 +6,9 @@ use rodio::{Decoder, OutputStream, Source};
 use slint::Weak;
 
 slint::include_modules!();
+
+const WARNING_SOUND_DATA: &[u8] = include_bytes!("../sounds/warning.wav");
+const CRITICAL_SOUND_DATA: &[u8] = include_bytes!("../sounds/critical.mp3");
 
 fn main() -> Result<(), slint::PlatformError> {
     let ui = AppWindow::new()?;
@@ -36,13 +38,13 @@ fn start_countdown(ui_handle: Weak<AppWindow>, countdown: i32, warning_threshold
     loop {
         for t in (1..countdown + 1).rev() {
             if t <= warning_threshold {
-                let warning_file = BufReader::new(File::open("sounds/warning.wav").unwrap());
-                let warning_source = Decoder::new(warning_file).unwrap();
+                let warning_cursor = Cursor::new(WARNING_SOUND_DATA);
+                let warning_source = Decoder::new(warning_cursor).unwrap();
                 let _ = stream_handle.play_raw(warning_source.convert_samples());
             }
             if t <= critical_threshold {
-                let critical_file = BufReader::new(File::open("sounds/critical.mp3").unwrap());
-                let critical_source = Decoder::new(critical_file).unwrap();
+                let critical_cursor = Cursor::new(CRITICAL_SOUND_DATA);
+                let critical_source = Decoder::new(critical_cursor).unwrap();
                 let _ = stream_handle.play_raw(critical_source.convert_samples());
             }
             ui_handle
