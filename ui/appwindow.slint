@@ -1,47 +1,99 @@
 import { Button, GridBox, LineEdit } from "std-widgets.slint";
 
 export component AppWindow inherits Window {
+    preferred-height: 220px;
+    preferred-width: 160px;
     always-on-top: true;
     title: "Tibia Timer";
     in-out property <int> curr-timer-value;
+    property <bool> is_running: false;
     callback start-timer(string, string, string);
+    callback stop-timer();
     GridBox {
         Row {
-            Text { text: "Critical alarm after:"; }
+            Text {
+                height: 32px;
+                width: 64px;
+                font-italic: false;
+                font-size: 14px;
+                horizontal-alignment: TextHorizontalAlignment.center;
+                text: "CRIT:";
+            }
             critical-threshold := LineEdit {
+                width: 64px;
                 input-type: number;
-                placeholder-text: "[seconds]";
+                placeholder-text: "[sec]";
             }
         }
         Row {
-            Text { text: "Warning alarm after:"; }
+            Text {
+                height: 32px;
+                width: 64px;
+                font-italic: false;
+                font-size: 14px;
+                horizontal-alignment: TextHorizontalAlignment.center;
+                text: "WARN:";
+            }
             warning-threshold := LineEdit {
+                width: 64px;
                 input-type: number;
-                placeholder-text: "[seconds]";
+                placeholder-text: "[sec]";
             }
         }
         Row {
-            Text { text: "Total time:"; }
+            Text {
+                height: 32px;
+                width: 64px;
+                font-italic: false;
+                font-size: 14px;
+                horizontal-alignment: TextHorizontalAlignment.center;
+                text: "TOTAL:";
+            }
             total-time := LineEdit {
+                width: 64px;
                 input-type: number;
-                placeholder-text: "[seconds]";
+                placeholder-text: "[sec]";
             }
         }
         Row {
             Button {
-                text: "Start Timer";
+                height: 32px;
+                width: 64px;
+                text: "START";
+                enabled: !is_running;
                 clicked => {
+                    is_running = true;
                     root.start-timer(total_time.text, warning-threshold.text, critical-threshold.text);
-                    self.text = "Timer running...";
                 }
             }
-            Text { text: "\{root.curr-timer-value}"; }
+            Button {
+                height: 32px;
+                width: 64px;
+                text: "STOP";
+                enabled: is_running;
+                clicked => {
+                    is_running = false;
+                    root.stop-timer();
+                }
+            }
         }
         Row {
             Text {
-                font-size: 10px;
-                text: "Copyright (c) 2024 Maras";
-            }
+                color: red;
+                font-size: 16px;
+                colspan: 2;
+                height: 24px;
+                width: 128px; horizontal-alignment: TextHorizontalAlignment.center;
+                text: "\{root.curr-timer-value}"; }
+        }
+        Row {
+            Text {
+                font-size: 8px;
+                horizontal-alignment: TextHorizontalAlignment.right;
+                colspan: 2;
+                height: 10px;
+                text: "Copyright (c) 2024 Maras"; }
         }
     }
+
 }
