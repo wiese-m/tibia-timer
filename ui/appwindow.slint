@@ -19,12 +19,14 @@ export component AppWindow inherits Window {
                 horizontal-alignment: TextHorizontalAlignment.center;
                 text: "CRIT:";
             }
+
             critical-threshold := LineEdit {
                 width: 64px;
                 input-type: number;
                 placeholder-text: "[sec]";
             }
         }
+
         Row {
             Text {
                 height: 32px;
@@ -34,12 +36,14 @@ export component AppWindow inherits Window {
                 horizontal-alignment: TextHorizontalAlignment.center;
                 text: "WARN:";
             }
+
             warning-threshold := LineEdit {
                 width: 64px;
                 input-type: number;
                 placeholder-text: "[sec]";
             }
         }
+
         Row {
             Text {
                 height: 32px;
@@ -49,12 +53,14 @@ export component AppWindow inherits Window {
                 horizontal-alignment: TextHorizontalAlignment.center;
                 text: "TOTAL:";
             }
+
             total-time := LineEdit {
                 width: 64px;
                 input-type: number;
                 placeholder-text: "[sec]";
             }
         }
+
         Row {
             Button {
                 height: 32px;
@@ -66,6 +72,7 @@ export component AppWindow inherits Window {
                     root.start-timer(total_time.text, warning-threshold.text, critical-threshold.text);
                 }
             }
+
             Button {
                 height: 32px;
                 width: 64px;
@@ -77,23 +84,27 @@ export component AppWindow inherits Window {
                 }
             }
         }
+
         Row {
             Text {
                 color: red;
                 font-size: 16px;
                 colspan: 2;
                 height: 24px;
-                width: 128px; horizontal-alignment: TextHorizontalAlignment.center;
-                text: "\{root.curr-timer-value}"; }
+                width: 128px;
+                horizontal-alignment: TextHorizontalAlignment.center;
+                text: "\{root.curr-timer-value}";
+            }
         }
+
         Row {
             Text {
                 font-size: 8px;
                 horizontal-alignment: TextHorizontalAlignment.right;
                 colspan: 2;
                 height: 10px;
-                text: "Copyright (c) 2024 Maras"; }
+                text: "Copyright (c) 2024 Maras";
+            }
         }
     }
-
 }

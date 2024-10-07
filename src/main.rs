@@ -1,6 +1,6 @@
 use std::io::Cursor;
-use std::sync::{Arc, mpsc, Mutex};
 use std::sync::mpsc::TryRecvError;
+use std::sync::{mpsc, Arc, Mutex};
 use std::thread::sleep;
 use std::time::Duration;
 
@@ -15,6 +15,7 @@ const CRITICAL_SOUND_DATA: &[u8] = include_bytes!("../sounds/critical.mp3");
 
 fn main() -> Result<(), slint::PlatformError> {
     let ui = AppWindow::new()?;
+
     let is_running = Arc::new(Mutex::new(false));
     let (tx, rx) = mpsc::channel();
     let rx = Arc::new(Mutex::new(rx));
@@ -43,9 +44,13 @@ fn main() -> Result<(), slint::PlatformError> {
                     Ok(_) | Err(TryRecvError::Disconnected) => {
                         break;
                     }
-                    Err(TryRecvError::Empty) => {
-                        start_countdown(ui_handle.clone(), countdown, warning_threshold, critical_threshold, is_running.clone())
-                    }
+                    Err(TryRecvError::Empty) => start_countdown(
+                        ui_handle.clone(),
+                        countdown,
+                        warning_threshold,
+                        critical_threshold,
+                        is_running.clone(),
+                    ),
                 }
             });
         }
@@ -93,7 +98,9 @@ fn start_countdown(
             let _ = stream_handle.play_raw(critical_source.amplify(AMPLIFY).convert_samples());
         }
         ui_handle
-            .upgrade_in_event_loop(move |ui| { ui.set_curr_timer_value(t); })
+            .upgrade_in_event_loop(move |ui| {
+                ui.set_curr_timer_value(t);
+            })
             .expect("Failed to update current timer value");
         sleep(Duration::from_secs(1));
         t -= 1;
