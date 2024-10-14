@@ -1,6 +1,6 @@
 # ![image](https://tibiopedia.pl/images/static/monsters/bony_sea_devil.gif) Tibia Timer ![image](https://tibiopedia.pl/images/static/monsters/bony_sea_devil.gif)
 
-A simple timer application written in Rust with a Slint UI, designed specifically for the game [Tibia](https://www.tibia.com/news/?subtopic=latestnews) (also known as Fear Timer) to track boss/respawn special actions. The timer plays warning and critical sounds repeatedly based on user-defined thresholds.
+Tibia Timer is a simple cross-platform timer application written in Rust with a Slint UI, designed specifically for the game [Tibia](https://www.tibia.com/news/?subtopic=latestnews) (also known as Fear Timer) to track boss/respawn special actions. The timer plays warning and critical sounds repeatedly based on user-defined thresholds.
 
 Go to [releases page](https://github.com/wiese-m/tibia-timer/releases) and download executable for your OS.
 
@@ -16,7 +16,7 @@ git clone https://github.com/wiese-m/tibia-timer.git
 cd tibia-timer/
 ```
 ```bash
-cargo build
+cargo build --release
 ```
 
 Preview:
